@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>QR Scanner</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+  <script src="https://unpkg.com/html5-qrcode"></script>
   <style>
     body {
       font-family: sans-serif;
       text-align: center;
       padding: 20px;
-      background: #fefbf5;
+      background: #f0f0f0;
     }
     #reader {
       width: 100%;
@@ -19,7 +19,7 @@
   </style>
 </head>
 <body>
-  <h2>Scan QR to Manage Stamps</h2>
+  <h2>📷 Scan Customer QR Code</h2>
   <div id="reader"></div>
 
   <script>
@@ -27,19 +27,21 @@
 
     function onScanSuccess(decodedText) {
       const params = new URLSearchParams(decodedText.split("?")[1]);
-      const uid = params.get("scanUserId");
+      const uid = params.get("uid");
 
       if (uid && bizId) {
+        // 이동: 오너 페이지에서 스캔된 사용자 정보 편집 가능
         window.location.href = `https://yourwixsite.com/business-admin/${bizId}?scanUserId=${uid}`;
       } else {
-        alert("Invalid QR code.");
+        alert("Invalid QR code");
       }
 
       html5QrcodeScanner.clear();
     }
 
     const html5QrcodeScanner = new Html5QrcodeScanner("reader", {
-      fps: 10, qrbox: 250
+      fps: 10,
+      qrbox: 250
     }, false);
     html5QrcodeScanner.render(onScanSuccess);
   </script>
